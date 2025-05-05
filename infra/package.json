@@ -1,0 +1,19 @@
+{
+  "name": "infra",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uplift-klinker/sentry-serverless.git"
+  },
+  "dependencies": {
+    "aws-cdk": "2.1013.0",
+    "aws-cdk-lib": "2.194.0",
+    "constructs": "10.4.2"
+  }
+}

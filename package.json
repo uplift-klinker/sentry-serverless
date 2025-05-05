@@ -1,0 +1,26 @@
+{
+  "name": "sentry-serverless",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "infra",
+    "packages/*",
+    "lambdas/*"
+  ],
+  "repository": "git@github.com:uplift-klinker/sentry-serverless.git",
+  "author": "Bryce Klinker <bryce.klinker@upliftdelivery.com>",
+  "license": "MIT",
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "build": "turbo build"
+  },
+  "dependencies": {
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.2"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@uplift/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uplift-klinker/sentry-serverless.git"
+  },
+  "dependencies": {
+    "@middy/core": "4.7.0",
+    "@sentry/aws-serverless": "9.15.0",
+    "@sentry/node": "9.15.0",
+    "@sentry/profiling-node": "9.15.0",
+    "aws-lambda": "1.0.7"
+  }
+}
