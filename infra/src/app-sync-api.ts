@@ -34,9 +34,17 @@ export class AppSyncApi extends Construct {
                 [EnvironmentVariables.subscriberQueueUrl]: props.subscriberQueueUrl,
             }
         }));
-        this.appSync.addLambdaDataSource('lambda', this.resolver.func, {
+        const source = this.appSync.addLambdaDataSource('lambda', this.resolver.func, {
             name: 'lambda',
             description: 'Lambda Resolver'
         });
+        source.createResolver('Query', {
+            typeName: 'Query',
+            fieldName: 'getData',
+        });
+        source.createResolver('Mutation', {
+            typeName: 'Mutation',
+            fieldName: 'sendData',
+        })
     }
 }
