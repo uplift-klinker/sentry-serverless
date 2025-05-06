@@ -4,7 +4,9 @@ import { resolveLambdaEnvironment } from "./lambda-environment";
 
 export type AwsLambdaProps = {
     codePath: string;
+    layers?: aws_lambda.ILayerVersion[];
     timeout?: Duration;
+    environment?: Record<string, string>;
 }
 
 export class AwsLambda extends Construct {
@@ -18,7 +20,11 @@ export class AwsLambda extends Construct {
             runtime: aws_lambda.Runtime.NODEJS_20_X,
             code: aws_lambda.Code.fromAsset(props.codePath),
             timeout: props.timeout ?? Duration.seconds(30),
-            environment: resolveLambdaEnvironment(scope),
+            layers: props.layers,
+            environment: {
+                ...resolveLambdaEnvironment(scope),
+                ...props.environment,
+            },
         })
     }
 

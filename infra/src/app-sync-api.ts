@@ -1,17 +1,24 @@
 import {Construct} from "constructs";
-import {aws_appsync, aws_lambda} from "aws-cdk-lib";
+import {aws_appsync} from "aws-cdk-lib";
 import {AwsLambda} from "./aws-lambda";
-import * as path from "node:path";
+import { LambdaConfig } from "./lambda-config";
+import {EnvironmentVariables} from "@uplift/core";
 
 export type AppSyncApiProps = {
     name: string;
     schemaFile: string;
+    codePath: string;
+    config: LambdaConfig;
+    subscriberQueueUrl: string;
 };
-
-const RESOLVER_CODE_PATH = path.resolve(__dirname, '..', 'lambdas', 'resolver', 'dist');
 
 export class AppSyncApi extends Construct {
     readonly appSync: aws_appsync.GraphqlApi;
+    readonly resolver: AwsLambda;
+
+    get resolverLambda() {
+        return this.resolver.func;
+    }
 
     constructor(scope: Construct, id: string, props: AppSyncApiProps) {
         super(scope, id);
@@ -22,12 +29,14 @@ export class AppSyncApi extends Construct {
             xrayEnabled: true,
         });
 
-        const resolver = new AwsLambda(this, 'resolver', {
-            codePath: RESOLVER_CODE_PATH,
-        });
-        this.appSync.addLambdaDataSource('lambda', resolver.func, {
+        this.resolver = new AwsLambda(this, 'resolver', props.config.codePathProps(props.codePath, {
+            environment: {
+                [EnvironmentVariables.subscriberQueueUrl]: props.subscriberQueueUrl,
+            }
+        }));
+        this.appSync.addLambdaDataSource('lambda', this.resolver.func, {
             name: 'lambda',
             description: 'Lambda Resolver'
-        })
+        });
     }
 }

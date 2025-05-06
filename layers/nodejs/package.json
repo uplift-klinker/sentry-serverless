@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@middy/core": "4.7.0",
+    "@sentry/node": "9.15.0",
+    "@sentry/profiling-node": "9.15.0",
+    "@sentry/aws-serverless": "9.15.0"
+  }
+}

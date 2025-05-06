@@ -1,0 +1,21 @@
+type Data {
+    id: ID!
+    name: String!
+}
+
+type DataConnection {
+    nodes: [Data!]!
+    totalCount: Int!
+}
+
+input DataInput {
+    name: String!
+}
+
+type Query {
+    getData: DataConnection!
+}
+
+type Mutation {
+     sendData(input: DataInput!): Boolean
+}

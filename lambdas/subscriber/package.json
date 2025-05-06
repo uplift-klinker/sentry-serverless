@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@middy/core": "4.7.0",
+    "@middy/sqs-partial-batch-failure": "4.7.0",
     "@uplift/core": "*"
   }
 }

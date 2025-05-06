@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@middy/core": "4.7.0",
-    "@uplift/core": "*"
+    "@uplift/core": "*",
+    "aws-lambda": "1.0.7"
   }
 }
