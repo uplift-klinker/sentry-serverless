@@ -29,6 +29,17 @@ export function sentryMiddleware(): middy.MiddlewareObj<unknown, unknown, Error,
                 await flush();
                 throw error;
             }
+        },
+        {
+            before: ({context, event}) => {
+                context.logger.info('handling event', {event});
+            },
+            after: ({context, event}) => {
+                context.logger.info('finished event', {event});
+            },
+            onError: ({context, event, error}) => {
+                context.logger.error('failed event', {event, error});
+            }
         }
     ];
 }
