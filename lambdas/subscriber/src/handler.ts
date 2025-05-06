@@ -5,11 +5,12 @@ import {
     DataInputSchema,
     dynamodbMiddleware,
     parseJsonToSchema,
-    saveData,
+    saveData, sentrifyHandler,
     sentryMiddleware
 } from "@uplift/core";
 import sqsPartialBatchFailure from "@middy/sqs-partial-batch-failure";
 import {SQSEvent, SQSRecord } from 'aws-lambda';
+import {wrapHandler} from '@sentry/aws-serverless';
 
 export type SubscriberContext = ContextWithDynamoDb & ContextWithSentry;
 
@@ -22,9 +23,11 @@ async function handleRecord(record: SQSRecord, context: SubscriberContext) {
     }
 }
 
-export const handler = middy(async (event: SQSEvent, context: SubscriberContext) => {
+async function handleEvent(event: SQSEvent, context: SubscriberContext) {
     return await Promise.allSettled(event.Records.map(r => handleRecord(r, context)));
-}).use(sentryMiddleware())
+}
+
+export const handler = middy(sentrifyHandler(handleEvent)).use(sentryMiddleware())
     .use(dynamodbMiddleware())
     .use(sqsPartialBatchFailure({
         logger: (reason, record) => {

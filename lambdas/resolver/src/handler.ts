@@ -3,7 +3,7 @@ import {
     ContextWithDynamoDb,
     ContextWithSentry,
     ContextWithSqsClient, DataInputSchema,
-    dynamodbMiddleware, getDataQuery, sendData,
+    dynamodbMiddleware, getDataQuery, sendData, sentrifyHandler,
     sentryMiddleware, sqsMiddleware
 } from "@uplift/core";
 import {AppSyncResolverEvent} from "aws-lambda";
@@ -36,13 +36,15 @@ const RESOLVER_MAP: Record<string, Record<string, ResolverFn>> = {
     }
 }
 
-
-export const handler = middy(async (event: AppSyncResolverEvent<unknown>, context: ResolverContext) => {
+async function handleEvent(event: AppSyncResolverEvent<unknown>, context: ResolverContext) {
     const handlerFunc = RESOLVER_MAP[event.info.parentTypeName][event.info.fieldName];
     if (!handlerFunc) {
         throw new Error(`failed to find resolver for ${event.info.parentTypeName} and ${event.info.fieldName}`);
     }
     return await handlerFunc(event, context);
-}).use(sentryMiddleware())
+}
+
+export const handler = middy(sentrifyHandler(handleEvent))
+    .use(sentryMiddleware())
     .use(dynamodbMiddleware())
     .use(sqsMiddleware());

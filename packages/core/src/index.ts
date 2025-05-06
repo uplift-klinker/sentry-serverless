@@ -7,3 +7,4 @@ export * from './send-data/send-data';
 export * from './environment-variables';
 export * from './save-data/save-data';
 export * from './parse-json-to-schema';
+export * from './sentrify-handler';
