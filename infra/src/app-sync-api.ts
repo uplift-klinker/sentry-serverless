@@ -42,11 +42,11 @@ export class AppSyncApi extends Construct {
             name: 'lambda',
             description: 'Lambda Resolver'
         });
-        source.createResolver('query', {
+        source.createResolver('Query', {
             typeName: 'Query',
             fieldName: 'getData',
         });
-        source.createResolver('mutation', {
+        source.createResolver('Mutation', {
             typeName: 'Mutation',
             fieldName: 'sendData',
         })
