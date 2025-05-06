@@ -8,9 +8,10 @@ import {LambdaConfig} from "./lambda-config";
 
 export type AppStackProps = Omit<StackProps, 'stackName'>;
 
-const SUBSCRIBER_CODE_PATH = path.resolve(__dirname, '..', 'lambdas', 'subscriber', 'dist');
-const RESOLVER_CODE_PATH = path.resolve(__dirname, '..', 'lambdas', 'resolver', 'dist');
-const RESOLVER_SCHEMA_PATH = path.resolve(__dirname, '..', 'lambdas', 'resolver', 'src', 'schema.graphql');
+const REPO_ROOT_PATH = path.join(__dirname, '..', '..');
+const SUBSCRIBER_CODE_PATH = path.resolve(REPO_ROOT_PATH, 'lambdas', 'subscriber', 'dist');
+const RESOLVER_CODE_PATH = path.resolve(REPO_ROOT_PATH, 'lambdas', 'resolver', 'dist');
+const RESOLVER_SCHEMA_PATH = path.resolve(REPO_ROOT_PATH, 'lambdas', 'resolver', 'src', 'schema.graphql');
 
 export class AppStack extends Stack {
     readonly storage: DataStorage;
