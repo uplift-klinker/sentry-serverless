@@ -1,8 +1,9 @@
 import {Construct} from "constructs";
 import {aws_appsync} from "aws-cdk-lib";
 import {AwsLambda} from "./aws-lambda";
-import { LambdaConfig } from "./lambda-config";
+import {LambdaConfig} from "./lambda-config";
 import {EnvironmentVariables} from "@uplift/core";
+import {RetentionDays} from "aws-cdk-lib/aws-logs";
 
 export type AppSyncApiProps = {
     name: string;
@@ -27,6 +28,9 @@ export class AppSyncApi extends Construct {
             definition: aws_appsync.Definition.fromFile(props.schemaFile),
             name: props.name,
             xrayEnabled: true,
+            logConfig: {
+                retention: RetentionDays.ONE_WEEK
+            }
         });
 
         this.resolver = new AwsLambda(this, 'resolver', props.config.codePathProps(props.codePath, {
@@ -38,13 +42,29 @@ export class AppSyncApi extends Construct {
             name: 'lambda',
             description: 'Lambda Resolver'
         });
-        source.createResolver('Query', {
+        source.createResolver('query', {
             typeName: 'Query',
             fieldName: 'getData',
         });
-        source.createResolver('Mutation', {
+        source.createResolver('mutation', {
             typeName: 'Mutation',
             fieldName: 'sendData',
+        })
+        source.createResolver('data-connection-total-count', {
+            typeName: 'DataConnection',
+            fieldName: 'totalCount',
+        })
+        source.createResolver('data-connection-nodes', {
+            typeName: 'DataConnection',
+            fieldName: 'nodes',
+        })
+        source.createResolver('data-id', {
+            typeName: 'Data',
+            fieldName: 'id',
+        })
+        source.createResolver('data-name', {
+            typeName: 'Data',
+            fieldName: 'name',
         })
     }
 }
