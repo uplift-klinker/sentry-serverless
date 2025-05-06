@@ -14,7 +14,8 @@
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "build": "turbo build",
-    "bootstrap": "yarn workspace infra bootstrap"
+    "bootstrap": "yarn workspace infra bootstrap",
+    "deploy": "yarn workspace infra deploy"
   },
   "dependencies": {
     "tsup": "8.4.0",

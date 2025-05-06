@@ -1,6 +1,5 @@
 import {Construct} from "constructs";
 import {aws_lambda, Duration} from "aws-cdk-lib";
-import { resolveLambdaEnvironment } from "./lambda-environment";
 
 export type AwsLambdaProps = {
     codePath: string;
@@ -22,7 +21,6 @@ export class AwsLambda extends Construct {
             timeout: props.timeout ?? Duration.seconds(30),
             layers: props.layers,
             environment: {
-                ...resolveLambdaEnvironment(scope),
                 ...props.environment,
             },
         })
