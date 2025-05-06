@@ -3,6 +3,10 @@ on:
   push:
     branches: [main]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy_to_aws:
     runs-on: ubuntu-22.04
