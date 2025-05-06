@@ -10,10 +10,7 @@ export class DataStorage extends Construct {
         super(scope, id);
 
         this.table = new aws_dynamodb.TableV2(this, 'table', {
-            billing: aws_dynamodb.Billing.onDemand({
-                maxReadRequestUnits: 5,
-                maxWriteRequestUnits: 5,
-            }),
+            billing: aws_dynamodb.Billing.onDemand(),
             tableName: DATA_TABLE_NAME,
             partitionKey: {
                 name: 'id',
