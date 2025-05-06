@@ -1,11 +1,12 @@
 import {Construct} from "constructs";
-import {aws_lambda, Duration} from "aws-cdk-lib";
+import {aws_lambda, aws_logs, Duration} from "aws-cdk-lib";
 
 export type AwsLambdaProps = {
     codePath: string;
     layers?: aws_lambda.ILayerVersion[];
     timeout?: Duration;
     environment?: Record<string, string>;
+    logGroup?: aws_logs.ILogGroup;
 }
 
 export class AwsLambda extends Construct {
@@ -20,6 +21,7 @@ export class AwsLambda extends Construct {
             code: aws_lambda.Code.fromAsset(props.codePath),
             timeout: props.timeout ?? Duration.seconds(30),
             layers: props.layers,
+            logGroup: props.logGroup,
             environment: {
                 ...props.environment,
             },

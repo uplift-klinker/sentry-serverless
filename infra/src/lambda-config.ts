@@ -1,12 +1,14 @@
 import {Construct} from "constructs";
-import {aws_lambda, Duration} from "aws-cdk-lib";
-import { AwsLambdaProps} from "./aws-lambda";
+import {aws_lambda, aws_logs, Duration} from "aws-cdk-lib";
+import {AwsLambdaProps} from "./aws-lambda";
 import {EnvironmentVariables} from "@uplift/core";
 import {DATA_TABLE_NAME} from "./data-storage";
 import {NODEJS_LAYERS_PATH} from "./paths";
+import {RetentionDays} from "aws-cdk-lib/aws-logs";
 
 export class LambdaConfig extends Construct {
     private readonly layers: aws_lambda.ILayerVersion[];
+    private readonly logGroup: aws_logs.ILogGroup;
 
     constructor(scope: Construct, id: string) {
         super(scope, id);
@@ -15,6 +17,10 @@ export class LambdaConfig extends Construct {
                 code: aws_lambda.Code.fromDockerBuild(NODEJS_LAYERS_PATH)
             })
         ]
+        this.logGroup = new aws_logs.LogGroup(this, 'log-group', {
+            logGroupName: '/cdk/sentry-serverless/logs',
+            retention: RetentionDays.ONE_WEEK
+        });
     }
 
     codePathProps(codePath: string, overrides?: Partial<AwsLambdaProps>): AwsLambdaProps {
@@ -25,6 +31,7 @@ export class LambdaConfig extends Construct {
             codePath,
             layers: this.layers,
             timeout: Duration.seconds(30),
+            logGroup: this.logGroup,
             ...overrides,
             environment: {
                 SENTRY_DSN: process.env.SENTRY_DSN,
