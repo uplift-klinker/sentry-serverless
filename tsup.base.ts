@@ -2,6 +2,7 @@ import {Options, defineConfig} from 'tsup'
 import {dependencies} from './layers/nodejs/package.json';
 
 const layerDependencies = Object.keys(dependencies)
+    .map(dependency => dependency.replaceAll('/', '\/'))
     .join('|');
 export function fromTsupBase(overrides?: Partial<Options>): ReturnType<typeof defineConfig> {
     return defineConfig({
