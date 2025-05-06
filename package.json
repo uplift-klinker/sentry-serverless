@@ -15,7 +15,8 @@
   "scripts": {
     "build": "turbo build",
     "bootstrap": "yarn workspace infra bootstrap",
-    "deploy": "yarn workspace infra deploy"
+    "deploy": "yarn workspace infra deploy",
+    "synth": "yarn workspace infra synth"
   },
   "dependencies": {
     "tsup": "8.4.0",
