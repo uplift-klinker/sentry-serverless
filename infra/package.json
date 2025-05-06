@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "bootstrap": "cdk bootstrap ${AWS_ACCOUNT_ID}/${AWS_REGION}",
-    "deploy": "tsx ./bin/app.ts"
+    "deploy": "cdk deploy --all"
   },
   "repository": {
     "type": "git",
