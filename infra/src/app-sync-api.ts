@@ -45,26 +45,38 @@ export class AppSyncApi extends Construct {
         source.createResolver('Query', {
             typeName: 'Query',
             fieldName: 'getData',
+            requestMappingTemplate: aws_appsync.MappingTemplate.lambdaRequest(),
+            responseMappingTemplate: aws_appsync.MappingTemplate.lambdaResult(),
         });
         source.createResolver('Mutation', {
             typeName: 'Mutation',
             fieldName: 'sendData',
+            requestMappingTemplate: aws_appsync.MappingTemplate.lambdaRequest(),
+            responseMappingTemplate: aws_appsync.MappingTemplate.lambdaResult(),
         })
-        source.createResolver('data-connection-total-count', {
-            typeName: 'DataConnection',
-            fieldName: 'totalCount',
-        })
-        source.createResolver('data-connection-nodes', {
-            typeName: 'DataConnection',
-            fieldName: 'nodes',
-        })
-        source.createResolver('data-id', {
-            typeName: 'Data',
-            fieldName: 'id',
-        })
-        source.createResolver('data-name', {
-            typeName: 'Data',
-            fieldName: 'name',
-        })
+        // source.createResolver('data-connection-total-count', {
+        //     typeName: 'DataConnection',
+        //     fieldName: 'totalCount',
+        //     requestMappingTemplate: aws_appsync.MappingTemplate.lambdaRequest(),
+        //     responseMappingTemplate: aws_appsync.MappingTemplate.lambdaResult(),
+        // })
+        // source.createResolver('data-connection-nodes', {
+        //     typeName: 'DataConnection',
+        //     fieldName: 'nodes',
+        //     requestMappingTemplate: aws_appsync.MappingTemplate.lambdaRequest(),
+        //     responseMappingTemplate: aws_appsync.MappingTemplate.lambdaResult(),
+        // })
+        // source.createResolver('data-id', {
+        //     typeName: 'Data',
+        //     fieldName: 'id',
+        //     requestMappingTemplate: aws_appsync.MappingTemplate.lambdaRequest(),
+        //     responseMappingTemplate: aws_appsync.MappingTemplate.lambdaResult(),
+        // })
+        // source.createResolver('data-name', {
+        //     typeName: 'Data',
+        //     fieldName: 'name',
+        //     requestMappingTemplate: aws_appsync.MappingTemplate.lambdaRequest(),
+        //     responseMappingTemplate: aws_appsync.MappingTemplate.lambdaResult(),
+        // })
     }
 }
