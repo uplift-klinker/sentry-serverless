@@ -1,17 +1,14 @@
 import {Stack, StackProps} from "aws-cdk-lib";
 import {Construct} from "constructs";
 import {SqsLambda} from "./sqs-lambda";
-import * as path from "node:path";
 import {AppSyncApi} from "./app-sync-api";
 import { DataStorage } from "./data-storage";
 import {LambdaConfig} from "./lambda-config";
+import {RESOLVER_CODE_PATH, RESOLVER_SCHEMA_PATH, SUBSCRIBER_CODE_PATH} from "./paths";
 
 export type AppStackProps = Omit<StackProps, 'stackName'>;
 
-const REPO_ROOT_PATH = path.join(__dirname, '..', '..');
-const SUBSCRIBER_CODE_PATH = path.resolve(REPO_ROOT_PATH, 'lambdas', 'subscriber', 'dist');
-const RESOLVER_CODE_PATH = path.resolve(REPO_ROOT_PATH, 'lambdas', 'resolver', 'dist');
-const RESOLVER_SCHEMA_PATH = path.resolve(REPO_ROOT_PATH, 'lambdas', 'resolver', 'src', 'schema.graphql');
+
 
 export class AppStack extends Stack {
     readonly storage: DataStorage;

@@ -3,9 +3,7 @@ import {aws_lambda, Duration} from "aws-cdk-lib";
 import { AwsLambdaProps} from "./aws-lambda";
 import {EnvironmentVariables} from "@uplift/core";
 import {DATA_TABLE_NAME} from "./data-storage";
-import * as path from "node:path";
-
-const LAYERS_DOCKER_FILE_PATH = path.resolve(__dirname, '..', 'layers', 'nodejs', 'dockerfile');
+import {NODEJS_LAYERS_DOCKER_FILE_PATH} from "./paths";
 
 export class LambdaConfig extends Construct {
     private readonly layers: aws_lambda.ILayerVersion[];
@@ -14,7 +12,7 @@ export class LambdaConfig extends Construct {
         super(scope, id);
         this.layers = [
             new aws_lambda.LayerVersion(this, 'sentry', {
-                code: aws_lambda.Code.fromDockerBuild(LAYERS_DOCKER_FILE_PATH)
+                code: aws_lambda.Code.fromDockerBuild(NODEJS_LAYERS_DOCKER_FILE_PATH)
             })
         ]
     }
