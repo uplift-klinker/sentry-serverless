@@ -18,7 +18,7 @@ const RESOLVER_MAP: Record<string, Record<string, ResolverFn>> = {
             return await getDataQuery(context);
         }
     },
-    mutation: {
+    Mutation: {
         sendData: async (event: AppSyncResolverEvent<unknown>, context: ResolverContext) => {
             const input = event.arguments && typeof event.arguments === 'object' && 'input' in event.arguments
                 ? DataInputSchema.parse(event.arguments.input)
