@@ -13,14 +13,15 @@
   "license": "MIT",
   "packageManager": "yarn@1.22.22",
   "scripts": {
-    "build": "turbo build"
+    "build": "turbo build",
+    "bootstrap": "yarn workspace infra bootstrap"
   },
   "dependencies": {
-    "tsup": "^8.4.0",
-    "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "tsup": "8.4.0",
+    "tsx": "4.19.4",
+    "typescript": "5.8.3"
   },
   "devDependencies": {
-    "turbo": "^2.5.2"
+    "turbo": "2.5.2"
   }
 }

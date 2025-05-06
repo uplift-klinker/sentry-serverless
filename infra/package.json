@@ -5,7 +5,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bootstrap": "cdk bootstrap ${AWS_ACCOUNT_ID}/${AWS_REGION}",
+    "deploy": "tsx ./bin/app.ts"
   },
   "repository": {
     "type": "git",

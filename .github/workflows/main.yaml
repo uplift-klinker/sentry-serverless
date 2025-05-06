@@ -1,0 +1,36 @@
+name: CI / CD
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy_to_aws:
+    runs-on: ubuntu-22.04
+    name: Deploy to AWS
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: 'us-east-2'
+          role-to-assume: 'arn:aws:iam::348875664561:role/uplift-deploy-oidc'
+          role-session-name: 'GitHub_Actions'
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Bootstrap CDK
+        run: |
+          AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
+          yarn bootstrap
+
+      - name: Deploy App Stack
+        run: yarn deploy
