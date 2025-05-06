@@ -33,7 +33,8 @@ jobs:
 
       - name: Bootstrap CDK
         run: |
-          AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
+          export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
+          echo "${AWS_ACCOUNT_ID}"
           yarn bootstrap
 
       - name: Deploy App Stack
