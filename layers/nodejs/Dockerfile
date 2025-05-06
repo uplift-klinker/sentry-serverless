@@ -6,3 +6,4 @@ COPY package.json nodejs/
 COPY sentry-init.js nodejs/
 
 RUN corepack enable
+RUN cd nodejs && yarn install --production
