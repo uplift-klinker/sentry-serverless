@@ -25,7 +25,7 @@ async function getItems({document, logger}: ContextWithDynamoDb): Promise<Data[]
         lastKey = output.LastEvaluatedKey;
         const currentItems = (output.Items ?? []).map(i => DataSchema.parse(i));
         items = [...items, ...currentItems];
-    } while(items.length < 25 || !output.Items || output.Items.length === 0);
+    } while(items.length < 25 && output.Items && output.Items.length > 0);
     logger.info('finished scanning table for items', {tableName, itemCount: items.length});
     return items.slice(0, 25);
 }
