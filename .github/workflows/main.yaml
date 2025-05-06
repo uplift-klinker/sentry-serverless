@@ -42,4 +42,4 @@ jobs:
           yarn bootstrap
 
       - name: Deploy App Stack
-        run: yarn deploy
+        run: yarn deploy --require-approval never
